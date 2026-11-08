@@ -1,87 +1,130 @@
-# Retail Sales Data Analysis
+# Python Retail Sales Analytics
 
-A Python project that analyzes a retail sales dataset to find revenue
-trends, top-performing products, and seasonal patterns — built with
-Pandas, NumPy, and Matplotlib, using a simple OOP structure.
+## Project Overview
 
-## Files
-- `generate_data.py` — creates a synthetic (but realistic) retail sales
-  dataset with intentional messiness (missing values, duplicates, bad
-  entries), saved to `data/retail_sales.csv`.
-- `analysis.py` — the main project. Contains the `SalesAnalyzer` class
-  that cleans the data and computes insights.
-- `output/` — saved charts (`monthly_trend.png`, `top_products.png`,
-  `category_distribution.png`).
+This project analyzes retail sales data using Python. It uses **Pandas, NumPy, and Matplotlib** to clean the dataset, calculate sales insights, and create visualizations that help understand sales performance.
 
-## How to run
-```bash
-pip install pandas numpy matplotlib
-python generate_data.py   # creates the dataset (only needed once)
-python analysis.py        # runs cleaning + analysis + saves charts
+The project includes a synthetic retail sales dataset generated using Python.
+
+## Tools and Technologies
+
+- Python
+- Pandas – data cleaning and analysis
+- NumPy – data generation and numerical operations
+- Matplotlib – data visualization
+
+## Project Structure
+
+```text
+Python-Retail-Sales-Analytics/
+│
+├── analysis.py
+├── generate_data.py
+├── retail_sales.csv
+├── README.md
+│
+└── output/
+    ├── monthly_trend.png
+    ├── top_products.png
+    └── category_distribution.png
 ```
 
-## What the code actually does (read this before your interview)
+*The `output/` folder and chart images are created when you run the analysis.*
 
-### 1. Data Cleaning (`clean_data`)
-- Drops exact duplicate rows.
-- Drops rows where `Quantity` is missing (can't calculate revenue
-  without it).
-- Removes rows with negative/zero `Quantity` (bad data entries).
-- Fills missing `Region` with `"Unknown"` instead of deleting the sale
-  — you don't want to lose real revenue data just because one field
-  is missing.
-- Recalculates `Revenue = Quantity * UnitPrice` so the numbers are
-  always internally consistent.
+## Dataset
 
-**Why this matters in an interview:** Data cleaning decisions always
-have a "why." Be ready to explain: *why drop vs. fill?* The rule of
-thumb used here — if the missing field is required to calculate the
-core number (Quantity → Revenue), drop it; if it's just a descriptive
-field (Region), fill it so you don't lose real data.
+The dataset contains retail transaction information, including:
 
-### 2. Analysis methods
-- `monthly_revenue_trend()` — groups by month, sums revenue.
-- `top_products(n)` — groups by product, sums revenue, sorts
-  descending, takes top N.
-- `category_distribution()` — revenue share per category.
-- `region_performance()` — revenue per region.
-- `average_order_value()` — mean revenue per row.
+- Order ID
+- Order Date
+- Product Category
+- Product
+- Region
+- Quantity
+- Unit Price
+- Revenue
 
-All of these use the same core Pandas pattern: **groupby → aggregate
-→ sort**. If you understand this one pattern deeply, you can explain
-every method in the class.
+The dataset is generated using the `generate_data.py` script and includes data-quality issues for cleaning practice, such as missing values, duplicate records, and invalid quantities.
 
-### 3. Why a class (OOP) instead of just functions?
-The `SalesAnalyzer` class bundles the data (`self.df`) with the
-methods that operate on it. This means:
-- You load the CSV once, clean it once, and then call as many
-  analysis methods as you want without re-passing the data around.
-- It's a simple, honest use of OOP — a class holding state
-  (`self.df`) plus methods (behavior) — exactly the kind of example
-  you'd want to explain if asked "do you know OOP?"
+## Data Cleaning
 
-### 4. Visualizations
-- Line chart for the monthly trend (shows the Oct–Nov festive-season
-  spike clearly).
-- Horizontal bar chart for top products.
-- Pie chart for category share.
+The analysis script performs the following cleaning steps:
 
-## Key insights you can talk about
-- Revenue spikes sharply in **October and November** (festive season
-  effect built into the data) — a good example of *seasonal pattern*
-  detection.
-- **Perfume, T-Shirt, and Non-stick Pan** are the top revenue-driving
-  products.
-- Revenue is fairly evenly spread across categories and regions, with
-  **Home & Kitchen** slightly ahead.
-- Average order value is a useful single-number summary of overall
-  order size — good for tracking over time.
+1. Removes duplicate records.
+2. Removes rows with missing quantities.
+3. Removes records with zero or negative quantities.
+4. Fills missing region values with `"Unknown"`.
+5. Recalculates revenue using quantity multiplied by unit price.
+6. Extracts the month from the order date for monthly analysis.
 
-## Possible follow-up questions to prepare for
-- "Why did you use `groupby` here instead of a loop?" → It's vectorized
-  and much faster than manually looping through rows in Python.
-- "How would you handle a much larger dataset?" → Mention chunked
-  reading (`pd.read_csv(..., chunksize=...)`) or using a database
-  instead of loading everything into memory.
-- "What would you add next?" → Ideas: correlation between price and
-  quantity sold, customer segmentation, day-of-week analysis.
+## Analysis Performed
+
+The project analyzes:
+
+- Monthly revenue trends
+- Top-selling products by revenue
+- Revenue by product category
+- Revenue by region
+- Average revenue per transaction
+
+## Visualizations
+
+The script generates the following charts in the `output/` folder:
+
+- `monthly_trend.png` – monthly revenue trend
+- `top_products.png` – top products by revenue
+- `category_distribution.png` – revenue distribution by category
+
+## How to Run the Project
+
+### 1. Clone the repository
+
+```bash
+git clone YOUR_GITHUB_REPOSITORY_URL
+```
+
+### 2. Open the project folder
+
+```bash
+cd Python-Retail-Sales-Analytics
+```
+
+### 3. Install the required libraries
+
+```bash
+pip install pandas numpy matplotlib
+```
+
+### 4. Run the analysis
+
+Make sure `retail_sales.csv` is in the project folder, then run:
+
+```bash
+python analysis.py
+```
+
+The cleaned data analysis and visualization charts will be generated.
+
+### Optional: Generate a new dataset
+
+To create a fresh synthetic dataset, run:
+
+```bash
+python generate_data.py
+```
+
+Make sure the generated CSV is saved as `retail_sales.csv` in the project folder before running `analysis.py`.
+
+## Key Learning Outcomes
+
+- Data cleaning using Pandas
+- Handling missing and duplicate values
+- Working with dates and numerical data
+- Performing exploratory data analysis
+- Creating charts using Matplotlib
+- Organizing a Python data analytics project
+
+## Author
+
+Nikhil Kumar Singh
+
